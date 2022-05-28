@@ -32,7 +32,10 @@ void cg::renderer::rasterization_renderer::render()
 {
 	rasterizer->clear_render_target({111, 15, 112});
 
-	float4x4 matrix = mul(camera->get_projection_matrix(), camera->get_view_matrix(), model->get_world_matrix());
+	float4x4 matrix = mul(
+			camera->get_projection_matrix(),
+			camera->get_view_matrix(),
+			model->get_world_matrix());
 	rasterizer->vertex_shader = [&](float4 vertex, cg::vertex vertex_data) {
 		auto processed = mul(matrix, vertex);
 		return std::make_pair(processed, vertex_data);
