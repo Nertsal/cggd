@@ -119,6 +119,13 @@ namespace cg::renderer
 				vertex.y = (-vertex.y + 1.f) * height / 2.f;
 			}
 
+
+			// Calculate [twice] the area of the triangle
+			float edge = edge_function(
+					float2{vertices[0].x, vertices[0].y},
+					float2{vertices[1].x, vertices[1].y},
+					float2{vertices[2].x, vertices[2].y});
+
 			// Find the bounding box for the triangle
 			// and clamp it to the view area
 			float2 bounding_box_begin{
@@ -164,13 +171,22 @@ namespace cg::renderer
 							point);
 					if (edge0 >= 0.f && edge1 >= 0.f && edge2 >= 0.f) {
 						// The point is inside the triangle
-						auto pixel_result = pixel_shader(vertices[0], 0.f);// TODO: interpolate values
-						render_target->item(x, y) = RT::from_color(pixel_result);
+						// Calculate barrycentric coordinates
+						float u = edge1 / edge;
+						float v = edge2 / edge;
+						float w = edge0 / edge;
+						float depth = u * vertices[0].z + v * vertices[1].z + w * vertices[2].z;
+						if (depth_test(depth, x, y)) {
+							auto pixel_result = pixel_shader(vertices[0], depth);// TODO: interpolate color
+							render_target->item(x, y) = RT::from_color(pixel_result);
+							if (depth_buffer) {
+								depth_buffer->item(x, y) = depth;
+							}
+						}
 					}
 				}
 			}
 		}
-		// TODO: Lab 1.06. Add Depth test stage to draw method of cg::renderer::rasterizer
 	}
 
 	template<typename VB, typename RT>
