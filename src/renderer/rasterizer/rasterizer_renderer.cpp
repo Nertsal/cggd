@@ -38,12 +38,18 @@ void cg::renderer::rasterization_renderer::render()
 		return std::make_pair(processed, vertex_data);
 	};
 
+	rasterizer->pixel_shader = [](cg::vertex vertex_data, float z) {
+		return cg::color{
+				vertex_data.ambient_r,
+				vertex_data.ambient_g,
+				vertex_data.ambient_b};
+	};
+
 	for (size_t shape_id = 0; shape_id < model->get_index_buffers().size(); shape_id++) {
 		rasterizer->set_vertex_buffer(model->get_vertex_buffers()[shape_id]);
 		rasterizer->set_index_buffer(model->get_index_buffers()[shape_id]);
 		rasterizer->draw(model->get_index_buffers()[shape_id]->get_number_of_elements(), 0);
 	}
-	// TODO: Lab 1.05. Implement `pixel_shader` lambda for the instance of `cg::renderer::rasterizer`
 	cg::utils::save_resource(*render_target, settings->result_path);
 }
 
