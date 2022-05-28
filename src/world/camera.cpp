@@ -19,7 +19,7 @@ cg::world::camera::~camera() {}
 
 void cg::world::camera::set_position(float3 in_position)
 {
-	// TODO: Lab 1.04. Implement `cg::world::camera` class
+	position = in_position;
 }
 
 void cg::world::camera::set_theta(float in_theta)
@@ -103,8 +103,7 @@ const float4x4 cg::world::camera::get_projection_matrix() const
 
 const float3 cg::world::camera::get_position() const
 {
-	// TODO: Lab 1.04. Implement `cg::world::camera` class
-	return float3{};
+	return position;
 }
 
 const float3 cg::world::camera::get_direction() const

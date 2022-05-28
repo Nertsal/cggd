@@ -125,7 +125,6 @@ namespace cg
 	};
 
 
-	// TODO: Lab 1.03. Implement `cg::vertex` struct
 	struct vertex
 	{
 		float x;
