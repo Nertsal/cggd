@@ -170,7 +170,7 @@ namespace cg::renderer
                 float v = (2.f * y) / static_cast<float>(height - 1) - 1.f;
                 u *= static_cast<float>(width) / height;
                 float3 ray_direction = direction + u * right - v * up;
-                ray ray(ray_position, ray_direction);
+                ray ray(position, ray_direction);
 
                 payload payload = trace_ray(ray, depth);
 
