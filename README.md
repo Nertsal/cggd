@@ -2,6 +2,10 @@
 
 This repo contains a template for Computer graphics in Game development labs (summer 2022)
 
+## Building
+
+`cmake --build . --config Debug --target Rasterization`
+
 ## Pre-requirements
 
 - Version control: [Git](https://git-scm.com/)
