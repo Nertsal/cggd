@@ -144,6 +144,7 @@ namespace cg::renderer
 	{
 		for (size_t i = 0; i < render_target->get_number_of_elements(); i++) {
 			render_target->item(i) = in_clear_value;
+			history->item(i) = float3{0.f, 0.f, 0.f};
 		}
 		// TODO: Lab 2.06. Add `history` resource in `raytracer` class
 	}
@@ -183,7 +184,7 @@ namespace cg::renderer
 	{
 		height = in_height;
 		width = in_width;
-		// TODO: Lab 2.06. Add `history` resource in `raytracer` class
+		history = std::make_shared<cg::resource<float3>>(width, height);
 	}
 
 	template<typename VB, typename RT>
@@ -192,6 +193,7 @@ namespace cg::renderer
 			float3 right, float3 up, size_t depth, size_t accumulation_num)
 	{
 		for (int x = 0; x < width; x++) {
+#pragma omp parallel for
 			for (int y = 0; y < height; y++) {
 				float u = (2.f * x) / static_cast<float>(width - 1) - 1.f;
 				float v = (2.f * y) / static_cast<float>(height - 1) - 1.f;
