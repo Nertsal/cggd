@@ -226,7 +226,7 @@ namespace cg::renderer
 			if (!aabb.aabb_test(ray)) {
 				continue;
 			}
-			for (auto& triangle: aabb.get_triangles) {
+			for (auto& triangle: aabb.get_triangles()) {
 				payload payload = intersection_shader(triangle, ray);
 				if (payload.t > min_t && payload.t < closest_hit_payload.t) {
 					// Current triangle is closer
