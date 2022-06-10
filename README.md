@@ -2,10 +2,6 @@
 
 This repo contains a template for Computer graphics in Game development labs (summer 2022)
 
-## Building
-
-`cmake --build . --config Debug --target Rasterization`
-
 ## Pre-requirements
 
 - Version control: [Git](https://git-scm.com/)
@@ -21,9 +17,8 @@ Use `git clone --recursive` to clone the repo with submodules or run `git submod
 Go to the project folder and run the next command:
 
 ```sh
-mkdir Build
-cd Build
-cmake .. -A x64
+mkdir build
+cmake --build . --config Debug --target Rasterization
 ```
 
 ## Third-party tools and data
