@@ -67,7 +67,7 @@ namespace cg::renderer
 
 		ambient = {vertex_a.ambient_r, vertex_a.ambient_g, vertex_a.ambient_b};
 		diffuse = {vertex_a.diffuse_r, vertex_a.diffuse_g, vertex_a.diffuse_b};
-		emmisive = {vertex_a.emmisive_r, vertex_a.emmisive_g, vertex_a.emmisive_b};
+		emissive = {vertex_a.emmisive_r, vertex_a.emmisive_g, vertex_a.emmisive_b};
 	}
 
 	template<typename VB>
@@ -217,7 +217,7 @@ namespace cg::renderer
 		depth--;
 
 		payload closest_hit_payload = {};
-		closest_hit_payload = max_t;
+		closest_hit_payload.t = max_t;
 		const triangle<VB>* closest_triangle = nullptr;
 
 		for (auto& triangle: triangles) {
