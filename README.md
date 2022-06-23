@@ -18,7 +18,7 @@ Go to the project folder and run the next command:
 
 ```sh
 mkdir build
-cmake --build . --config Debug --target Rasterization
+cmake --build build --config Debug --target Rasterization
 ```
 
 ## Running
