@@ -61,7 +61,7 @@ void cg::world::camera::set_z_far(float in_z_far)
 
 const float4x4 cg::world::camera::get_view_matrix() const
 {
-	float3 up{0.f, 1.f, 0.f}; // Y-axis is up
+	float3 up{0.f, 1.f, 0.f};// Y-axis is up
 	float3 eye = position + get_direction();
 
 	float3 z_axis = normalize(position - eye);
@@ -78,16 +78,19 @@ const float4x4 cg::world::camera::get_view_matrix() const
 const DirectX::XMMATRIX cg::world::camera::get_dxm_view_matrix() const
 {
 	// TODO Lab 3.08. Implement `get_dxm_view_matrix`, `get_dxm_projection_matrix`, and `get_dxm_mvp_matrix` methods of `camera`
+	return DirectX::XMMatrixIdentity();
 }
 
 const DirectX::XMMATRIX cg::world::camera::get_dxm_projection_matrix() const
 {
 	// TODO Lab 3.08. Implement `get_dxm_view_matrix`, `get_dxm_projection_matrix`, and `get_dxm_mvp_matrix` methods of `camera`
+	return DirectX::XMMatrixIdentity();
 }
 
 const DirectX::XMMATRIX camera::get_dxm_mvp_matrix() const
 {
 	// TODO Lab 3.08. Implement `get_dxm_view_matrix`, `get_dxm_projection_matrix`, and `get_dxm_mvp_matrix` methods of `camera`
+	return DirectX::XMMatrixIdentity();
 }
 #endif
 
