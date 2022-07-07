@@ -229,7 +229,7 @@ void cg::renderer::dx12_renderer::create_root_signature(const D3D12_STATIC_SAMPL
 	D3D12_ROOT_SIGNATURE_FLAGS rs_flags =
 			D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
-	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rs_descriptor = {};
+	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rs_descriptor;
 	rs_descriptor.Init_1_1(
 			_countof(root_parameters),
 			root_parameters,
@@ -263,7 +263,7 @@ std::filesystem::path cg::renderer::dx12_renderer::get_shader_path(const std::st
 	WCHAR buffer[MAX_PATH];
 	GetModuleFileName(nullptr, buffer, MAX_PATH);
 	auto shader_path =
-			std::filesystem::path(buffer).parent_path() /
+			std::filesystem::path(buffer).parent_path().parent_path().parent_path() /
 			shader_name;
 	return shader_path;
 }
@@ -345,9 +345,17 @@ void cg::renderer::dx12_renderer::create_pso(const std::string& shader_name)
 	pso_desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
 	pso_desc.SampleDesc.Count = 1;
 
+	auto arg_1 = &pso_desc;
+	auto subarg = &pipeline_state;
+	auto arg_2 = __uuidof(**(subarg));
+	auto arg_3 = IID_PPV_ARGS_Helper(subarg);
+	auto val = device->CreateGraphicsPipelineState(arg_1, arg_2, arg_3);
+	THROW_IF_FAILED(val);
+	/*
 	THROW_IF_FAILED(device->CreateGraphicsPipelineState(
 			&pso_desc,
 			IID_PPV_ARGS(&pipeline_state)));
+	*/
 }
 
 void cg::renderer::dx12_renderer::create_resource_on_upload_heap(ComPtr<ID3D12Resource>& resource, UINT size, const std::wstring& name)
@@ -420,7 +428,7 @@ void cg::renderer::dx12_renderer::create_constant_buffer_view(const ComPtr<ID3D1
 void cg::renderer::dx12_renderer::load_assets()
 {
 	create_root_signature(nullptr, 0);
-	create_pso("shaders.hlsl");
+	create_pso("shaders/shaders.hlsl");
 	create_command_allocators();
 	create_command_list();
 	command_list->Close();// Questionable
@@ -526,7 +534,7 @@ void cg::renderer::dx12_renderer::populate_command_list()
 	command_list->SetGraphicsRootSignature(root_signature.Get());
 	ID3D12DescriptorHeap* heaps[] = {cbv_srv_heap.get()};
 	command_list->SetDescriptorHeaps(_countof(heaps), heaps);
-	command_list->SetComputeRootDescriptorTable(
+	command_list->SetGraphicsRootDescriptorTable(
 			0, cbv_srv_heap.get_gpu_descriptor_handle(0));
 	command_list->RSSetViewports(1, &view_port);
 	command_list->RSSetScissorRects(1, &scissor_rect);
@@ -585,6 +593,7 @@ void cg::renderer::dx12_renderer::move_to_next_frame()
 				fence_values[frame_index],
 				fence_event));
 		WaitForSingleObjectEx(fence_event, INFINITE, FALSE);
+		fence_values[frame_index]++;
 	}
 	fence_values[frame_index] = current_fence_value + 1;
 }
