@@ -319,7 +319,7 @@ void cg::renderer::dx12_renderer::create_pso(const std::string& shader_name)
 			{"COLOR", 0,
 			 DXGI_FORMAT_R32G32B32_FLOAT, 0, 32,
 			 D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-			{"COLOR", 2,
+			{"COLOR", 1,
 			 DXGI_FORMAT_R32G32B32_FLOAT, 0, 44,
 			 D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 			{"COLOR", 2,
