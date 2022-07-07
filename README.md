@@ -28,6 +28,11 @@ Raytracing:
 .\build\Release\Raytracing.exe --model_path models/CornellBox-Original.obj --camera_position 0.0,1.0,2.0 --accumulation_num 16 --raytracing_depth 3
 ```
 
+DirectX12:
+```sh
+.\build\Release\DirectX12.exe
+```
+
 ## Third-party tools and data
 
 - [STB](https://github.com/nothings/stb) by Sean Barrett (Public Domain)

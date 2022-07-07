@@ -263,7 +263,7 @@ std::filesystem::path cg::renderer::dx12_renderer::get_shader_path(const std::st
 	WCHAR buffer[MAX_PATH];
 	GetModuleFileName(nullptr, buffer, MAX_PATH);
 	auto shader_path =
-			std::filesystem::path(buffer).parent_path().parent_path().parent_path() /
+			std::filesystem::path(buffer).parent_path() /
 			shader_name;
 	return shader_path;
 }
