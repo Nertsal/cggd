@@ -89,7 +89,7 @@ const DirectX::XMMATRIX cg::world::camera::get_dxm_view_matrix() const
 			get_up().x,
 			get_up().y,
 			get_up().z};
-	return DirectX::XMMatrixLookAtRH(
+	return DirectX::XMMatrixLookToRH(
 			eye_position,
 			eye_direction,
 			up_direction);
