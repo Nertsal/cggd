@@ -36,6 +36,13 @@ void cg::renderer::dx12_renderer::init()
 			static_cast<LONG>(settings->width),
 			static_cast<LONG>(settings->height));
 
+	cb.light.position = float4{
+			settings->camera_position[0],
+			settings->camera_position[1] + 20.f,
+			settings->camera_position[2] - 5.f,
+			1.f};
+	cb.light.color = float4{0.5f, 0.0f, 0.5f, 1.0f};
+
 	load_pipeline();
 	load_assets();
 }
@@ -261,7 +268,7 @@ void cg::renderer::dx12_renderer::create_root_signature(const D3D12_STATIC_SAMPL
 			D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
 	root_parameters[0].InitAsDescriptorTable(
 			1, &ranges[0],
-			D3D12_SHADER_VISIBILITY_VERTEX);
+			D3D12_SHADER_VISIBILITY_ALL);
 
 	ranges[1].Init(
 			D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
