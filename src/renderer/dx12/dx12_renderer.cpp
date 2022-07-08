@@ -461,8 +461,8 @@ void cg::renderer::dx12_renderer::create_pso(const std::string& shader_name)
 
 	ComPtr<ID3DBlob> vertex_shader_shadow_map = compile_shader(
 			get_shader_path(shader_name),
-			"PSMain_texture",
-			"ps_5_0");
+			"VSShadowMap",
+			"vs_5_0");
 	pso_desc.PS = CD3DX12_SHADER_BYTECODE(0, 0);
 	pso_desc.VS = CD3DX12_SHADER_BYTECODE(vertex_shader_shadow_map.Get());
 	pso_desc.NumRenderTargets = 0;
